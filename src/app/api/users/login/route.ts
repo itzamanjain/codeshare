@@ -1,0 +1,51 @@
+import {connectDb} from '../../../../dbconfig/dbConfig.js'
+import User from '../../../../models/user.model.js'
+import { NextRequest,NextResponse} from 'next/server'
+import bcryptjs from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+
+connectDb()
+
+//login route
+export async function POST(request:NextRequest) {
+    try {
+        const reqBody = await request.json()
+        const {username,password} = reqBody;
+
+        if(!username || !password){
+            return NextResponse.json({error:'Please fill all fields'},{status:400})
+        }
+
+        const user = await User.findOne({username})
+        if(!user){
+            return NextResponse.json({error:'Invalid Username'},{status:400})
+        }
+
+        const validPassword = await bcryptjs.compare(password,user.password)
+
+
+        if(!validPassword){
+            return NextResponse.json({error:'Invalid Password'},{status:400})
+        }
+
+        //generea jwt token
+
+        const tokenData = {
+            id: user._id,
+            username:user.username,
+        }
+
+        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: '1d' })
+
+
+        const response =  NextResponse.json({message:'Login successful',success:true})
+
+        response.cookies.set("token",token,{httpOnly:true})
+
+        return response
+
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json(error.message, {status: 500})
+    }
+}
