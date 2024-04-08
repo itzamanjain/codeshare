@@ -4,5 +4,6 @@ import { GridBackgroundDemo } from "./components/GridDemo";
 export default function Home() {
   return (
     <GridBackgroundDemo />
+  
   );
 }

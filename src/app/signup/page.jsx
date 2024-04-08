@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
-const page = () => {
+const Page = () => {
   // const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +46,7 @@ const page = () => {
   
 
   return (
-    <div className="min-h-[100vh] flex justify-center items-center ">
+    <div className="min-h-[100vh] flex justify-center bg-black items-center ">
       <div className="bg-[#f4f4f4]  p-8 rounded shadow-md 2xs:w-[90%] xs:w-[90%] md:w-3/4 sm:w-2/3 2xl:w-[28%] lg:w-2/6  h-auto mt-10  bg-gradient-to-r from-[#141414] to-[#1c1c1c] text-[#ffffff]">
         <h2 className="text-3xl max-md:text-2xl  font-semibold mb-7">
           Welcome to Code Share
@@ -121,4 +121,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
