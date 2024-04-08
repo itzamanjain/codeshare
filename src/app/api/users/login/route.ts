@@ -10,13 +10,13 @@ connectDb()
 export async function POST(request:NextRequest) {
     try {
         const reqBody = await request.json()
-        const {username,password} = reqBody;
+        const {email,password} = reqBody;
 
-        if(!username || !password){
+        if(!email || !password){
             return NextResponse.json({error:'Please fill all fields'},{status:400})
         }
 
-        const user = await User.findOne({username})
+        const user = await User.findOne({email})
         if(!user){
             return NextResponse.json({error:'Invalid Username'},{status:400})
         }

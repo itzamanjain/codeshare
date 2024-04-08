@@ -9,12 +9,13 @@ export async function POST(request:NextRequest){
     try {
         const reqBody = await request.json()
 
-        const { username,password } = reqBody;
+        const { email,username,password } = reqBody;
 
 
         const user = await User.findOne({username})
-        if(user){
-            return NextResponse.json({error:'Oops username already taken !!'},{status:400})
+        const usedEmail = await User.findOne({email})
+        if(user || usedEmail){
+            return NextResponse.json({error:'Oops username or email already used !!'},{status:400})
         }
 
         const salt = await bcryptjs.genSalt(10)
