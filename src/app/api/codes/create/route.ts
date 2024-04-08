@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const SavingCode = new Post({ title, code, owerId: userId });
+    const SavingCode = new Post({ title, code, ownerId: userId });
 
     const uploadedCode = await SavingCode.save(); 
     console.log(uploadedCode);

@@ -17,8 +17,12 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "users"
     
+    },
+    createdAt:{
+        type: Date,
+        default: Date.now()
     }
-});
+},{timestamps: true});
 
 const Post = mongoose.models.posts || mongoose.model("posts", userSchema);
 

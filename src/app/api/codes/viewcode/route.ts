@@ -11,6 +11,9 @@ export async function GET(request:NextRequest){
         if(allCodes.length === 0){
             return NextResponse.json({message:'No code found',success:false},{status:404})
         }
+        console.log(allCodes);
+        
+        
         return NextResponse.json({message:'All codes fetched successfully',
             success:true,
             allCodes
