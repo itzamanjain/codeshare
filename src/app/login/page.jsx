@@ -1,13 +1,12 @@
 "use client"
 import React, { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Page = () => {
-  // const navigate = useNavigate();
+  
   const [errorMessage, setErrorMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  // const apiUrl = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     if (errorMessage) {
