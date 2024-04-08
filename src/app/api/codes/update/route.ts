@@ -1,7 +1,7 @@
 import { connectDb } from '../../../../dbconfig/dbConfig.js'
 import { NextRequest,NextResponse} from 'next/server'
 import Post from '../../../../models/post.model.js'
-import { getDataFromToken } from "../../../../helper/getDataFromToken.js";
+import { getDataFromToken } from "../../../../helper/getDataFromToken";
 
 
 
@@ -26,7 +26,7 @@ export async function PUT(request:NextRequest){
         if(userId !== ownerId){
             return NextResponse.json({error:'Unauthorized request'},{status:401})
         }
-        
+
         const updatedCode = await Post.findByIdAndUpdate(id,{title,code},{new:true})
         if(!updatedCode){
             return NextResponse.json({error:'No code found with this id'},{status:400})

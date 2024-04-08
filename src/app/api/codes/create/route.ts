@@ -1,7 +1,7 @@
 import { connectDb } from "../../../../dbconfig/dbConfig.js";
 import { NextRequest, NextResponse } from "next/server";
 import Post from "../../../../models/post.model.js";
-import { getDataFromToken } from "../../../../helper/getDataFromToken.js";
+import { getDataFromToken } from "../../../../helper/getDataFromToken";
 
 connectDb();
 
