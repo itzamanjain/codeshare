@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
+import { unique } from "next/dist/build/utils";
 
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
       required: true,
+      unique:true,
       trim: true,
       min: 3,
       max: 25,
@@ -14,6 +16,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique: true,
+      match: [/.+\@.+\..+/, "Please fill a valid email address"]
     },
     password: {
       type: String,

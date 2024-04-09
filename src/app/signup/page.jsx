@@ -1,19 +1,28 @@
-"use client"
+"use client";
 import { useRef, useState, useEffect } from "react";
-
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import * as z from 'zod'
 
 const Page = () => {
   // const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading,setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const username = useRef();
   const email = useRef();
   const password = useRef();
   const router = useRouter();
 
+
+  const schema = z.object({
+    username: z.string().min(3),
+    email:z
+    .email("Enter a valid Email !!")
+    .min(3,{ message: "This field has to be filled." })
+    .string(),
+    password:z.string().min(6,{message:"please make a strong password!"})
+  })
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
@@ -38,17 +47,13 @@ const Page = () => {
         password: password.current.value,
       }),
     });
-    router.push('/login')
+    router.push("/login");
     setIsLoading(false);
-    
-    
-  
-}
+  };
 
-const handleShowPassword = () => {
-  setShowPassword(!showPassword);
-};
-
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="min-h-[100vh] flex justify-center bg-black items-center ">
@@ -66,6 +71,7 @@ const handleShowPassword = () => {
             type="text"
             id="username"
             ref={username}
+            
             placeholder="Create Unique username"
           />
         </div>
@@ -111,9 +117,8 @@ const handleShowPassword = () => {
           onClick={registerUser}
           className="w-full mt-4 mb-4 bg-[#1c1c1c] text-white rounded py-2 px-4 hover:bg-[#161616] transition duration-300"
         >
-         {isLoading ? "Processing ... ": "Sign up"}
+          {isLoading ? "Processing ... " : "Sign up"}
         </button>
-        
 
         <a className="mt-4  hover:text-blue-900 hover:underline" href="/login">
           <span className="mt-4">Already on Code Share! Login.</span>

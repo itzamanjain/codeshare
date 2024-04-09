@@ -1,0 +1,11 @@
+import { z} from 'zod'
+
+export const logInSchema = z.object({  
+    email: z
+        .string()
+        .email("Enter a valid Email !!")
+        .min(3, { message: "This field has to be filled." }),
+    password: z
+        .string()
+        .min(6, { message: "please make a strong password, More than 6 chars!" }),
+})

@@ -1,8 +1,28 @@
-import React from 'react'
+"use client"
+import React,{useState,useEffect} from 'react'
+import axios from 'axios'
 
+
+// this is user profile here we are going to show their name , email , etc, and all the code that they have uploaded  post [] 
 const page = () => {
+
+    const showProfile = async() => {
+        try {
+            const data = await axios.post(`api/users/me`)
+            console.log(data.data.data.email);
+            // const { username, email, code } = data;
+            // console.log(username, email, code);
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
   return (
-    <div className='text-center text-3xl '>profile page</div>
+    <>
+        <div className='text-center text-3xl '>profile page</div>
+        <button onClick={showProfile} className=" mt-4 mb-4 bg-[#1c1c1c] text-white rounded py-2 px-4 hover:bg-[#161616] transition duration-300" >
+            Fetch profile Data
+        </button>
+    </>
   )
 }
 
