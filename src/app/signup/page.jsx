@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import * as z from 'zod'
+
 
 const Page = () => {
   // const navigate = useNavigate();
@@ -15,14 +15,7 @@ const Page = () => {
   const router = useRouter();
 
 
-  const schema = z.object({
-    username: z.string().min(3),
-    email:z
-    .email("Enter a valid Email !!")
-    .min(3,{ message: "This field has to be filled." })
-    .string(),
-    password:z.string().min(6,{message:"please make a strong password!"})
-  })
+ 
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
