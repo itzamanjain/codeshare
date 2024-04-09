@@ -1,16 +1,18 @@
 "use client"
 import { useRef, useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   // const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading,setIsLoading] = useState(false);
   const username = useRef();
   const email = useRef();
   const password = useRef();
-  // const apiUrl = import.meta.env.VITE_API_URL;
+  const router = useRouter();
 
   useEffect(() => {
     if (errorMessage) {
@@ -24,7 +26,7 @@ const Page = () => {
 
   const registerUser = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const data = await fetch(`/api/users/signup`, {
       method: "POST",
       headers: {
@@ -36,14 +38,17 @@ const Page = () => {
         password: password.current.value,
       }),
     });
-
-    const response = await data.json();
-  };
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
+    router.push('/login')
+    setIsLoading(false);
+    
+    
   
+}
+
+const handleShowPassword = () => {
+  setShowPassword(!showPassword);
+};
+
 
   return (
     <div className="min-h-[100vh] flex justify-center bg-black items-center ">
@@ -106,7 +111,7 @@ const Page = () => {
           onClick={registerUser}
           className="w-full mt-4 mb-4 bg-[#1c1c1c] text-white rounded py-2 px-4 hover:bg-[#161616] transition duration-300"
         >
-          Sign Up
+         {isLoading ? "Processing ... ": "Sign up"}
         </button>
         
 

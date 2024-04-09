@@ -1,12 +1,12 @@
-"use client"
+"use client";
 import React, { useRef, useState, useEffect } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-
+import { useRouter } from "next/navigation";
 const Page = () => {
-  
   const [errorMessage, setErrorMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (errorMessage) {
@@ -23,6 +23,7 @@ const Page = () => {
 
   const loginUser = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const data = await fetch(`api/users/login`, {
       method: "POST",
       headers: {
@@ -33,10 +34,9 @@ const Page = () => {
         password: password.current.value,
       }),
     });
-
+    router.push("/profile");
+    setIsLoading(false)
     const response = await data.json();
-
-    // Your login logic here
   };
 
   const handleShowPassword = () => {
@@ -68,7 +68,7 @@ const Page = () => {
             Password
           </label>
           <div className=" relative flex items-center">
-             <input
+            <input
               className="w-full border rounded px-3 py-2 outline-none border-none focus:outline-none focus:border-[#1c1c1c] pr-10 bg-[#1c1c1c] bg-gradient-to-r to-[#141414] from-[#1c1c1c] "
               type={showPassword ? "text" : "password"}
               id="password"
@@ -85,32 +85,26 @@ const Page = () => {
                 onClick={handleShowPassword}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
               />
-            )} 
+            )}
           </div>
         </div>
 
         <div className="flex my-4 justify-between items-center">
-          <div>
-            <input type="checkbox" id="remember" className="" />
-            <label className="ml-2 " htmlFor="remember">
-              Remember me
-            </label>
-          </div>
+          
           <a className="underline" href="/">
             Forgot Password?
           </a>
         </div>
         <button
+          
           onClick={loginUser}
           className="w-full bg-[#1c1c1c] text-white my-4 rounded py-2 px-4 hover:bg-[#161616] transition duration-300"
         >
-          Login
+          {isLoading ? "Processing ... ": "Login"}
+          
         </button>
-        
-        <a
-          className="mt-5 hover:underline hover:text-blue-900"
-          href="/signup"
-        >
+
+        <a className="mt-5 hover:underline hover:text-blue-900" href="/signup">
           {" "}
           Not on Code Share yet! Sign up
         </a>
